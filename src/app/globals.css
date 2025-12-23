@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-rose: #C7A491;
+  --color-blush: #EECFCA;
+  --color-sage: #919682;
+  --color-mint: #C7CDBF;
+  --color-forest: #595E48;
+}
+
+body {
+  color: #595E48;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
