@@ -1,82 +1,52 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
+import { crisisTheme } from "@/styles/Theme";
 import { headingFont } from "@/styles/fonts";
 
 export default function CTA() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
   const router = useRouter();
 
   return (
-    <section className="py-32 bg-gradient-to-br from-[#595E48] via-[#919682] to-[#C7CDBF] relative overflow-hidden">
-      {/* Animated background elements */}
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-        }}
-        transition={{ duration: 20, repeat: Infinity }}
-        className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{
-          scale: [1, 1.3, 1],
-          rotate: [360, 180, 0],
-        }}
-        transition={{ duration: 25, repeat: Infinity }}
-        className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-      />
-
-      <div ref={ref} className="container mx-auto px-6 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+    <section
+      className="py-32 relative overflow-hidden"
+      style={{
+        background: `linear-gradient(
+          135deg,
+          ${crisisTheme.colors.primary},
+          ${crisisTheme.colors.secondary}
+        )`,
+      }}
+    >
+      <div className="container mx-auto px-6 text-center relative z-10">
+        <h2
+          className={`${headingFont.className} text-5xl md:text-7xl mb-6`}
+          style={{ color: crisisTheme.colors.surface }}
         >
-          <h2 className={`${headingFont.className} text-5xl md:text-7xl text-white mb-6`}>
-            Your story isn't over
-          </h2>
-          <p className="text-2xl text-white/90 mb-12 max-w-3xl mx-auto">
-            Join thousands who are rewriting their narratives with AI-powered support
-          </p>
+          Your story isn’t over
+        </h2>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <Button
-            size="lg"
-            onClick={() => router.push("/signup")}
-            className="
-                bg-[#595E48] 
-                text-white 
-                hover:bg-[#4a503d]
-                text-xl 
-                px-16 
-                py-6 
-                shadow-2xl
-                border border-white/20
-            "
-            >
-            Start Your Story Today
-            </Button>
+        <p className="text-2xl mb-12 max-w-3xl mx-auto text-white/90">
+          Join thousands rewriting their narratives with AI-powered support
+        </p>
 
-          </motion.div>
+        <Button
+          size="lg"
+          onClick={() => router.push("/signup")}
+          className="text-xl px-16 py-6 shadow-2xl"
+          style={{
+            background: crisisTheme.colors.surface,
+            color: crisisTheme.colors.textTertiary,
+          }}
+        >
+          Start Your Story Today
+        </Button>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.6 }}
-            className="mt-8 text-white/70"
-          >
-            Your Story • Your Strength • Your Journey • Your Future • Your Anchor
-          </motion.p>
-        </motion.div>
+        <p className="mt-8 text-white/70">
+          Your Story • Your Strength • Your Journey • Your Future • Your Anchor
+        </p>
       </div>
     </section>
   );

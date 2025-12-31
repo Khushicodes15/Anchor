@@ -5,15 +5,20 @@ import { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { crisisTheme } from "@/styles/Theme";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
   const router = useRouter();
+
   const backgroundColor = useTransform(
     scrollY,
     [0, 100],
-    ["rgba(199, 205, 191, 0)", "rgba(199, 205, 191, 0.95)"]
+    [
+      "rgba(255, 247, 230, 0)", // warm cream (top)
+      crisisTheme.colors.surface, // clean white on scroll
+    ]
   );
 
   useEffect(() => {
@@ -33,7 +38,9 @@ export default function Navbar() {
     <motion.nav
       style={{ backgroundColor }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "py-4 backdrop-blur-lg shadow-lg" : "py-6"
+        isScrolled
+          ? "py-4 backdrop-blur-lg shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
+          : "py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -43,17 +50,18 @@ export default function Navbar() {
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2"
         >
-          {/* Logo image (add later) */}
           <Image
-            src="/logo.png"          // add this file later
+            src="/logo.png"
             alt="Anchor logo"
             width={32}
             height={32}
-            className="hidden"       // hide until logo exists
+            className="hidden"
           />
 
-          {/* Text fallback */}
-          <span className="text-3xl font-bold text-[#595E48]">
+          <span
+            className="text-3xl font-bold"
+            style={{ color: crisisTheme.colors.textPrimary }}
+          >
             Anchor
           </span>
         </motion.div>
@@ -72,8 +80,19 @@ export default function Navbar() {
             <motion.button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              whileHover={{ scale: 1.2 }}
-              className="text-lg text-[#595E48] hover:text-[#919682] transition-colors font-medium"
+              whileHover={{ scale: 1.15 }}
+              className="text-lg transition-colors font-medium"
+              style={{
+                color: crisisTheme.colors.textPrimary,
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color =
+                  crisisTheme.colors.secondary)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color =
+                  crisisTheme.colors.textPrimary)
+              }
             >
               {item.label}
             </motion.button>
@@ -82,12 +101,12 @@ export default function Navbar() {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 1, x: 20 }}
-          animate={{ opacity: 2, x: 0 }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
         >
-          <Button 
-          onClick={() => router.push("/signup")}
-          size="md">Get Started</Button>
+          <Button onClick={() => router.push("/signup")} size="md">
+            Get Started
+          </Button>
         </motion.div>
       </div>
     </motion.nav>

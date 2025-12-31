@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, CSSProperties } from "react";
 
 interface ButtonProps {
   children: ReactNode;
@@ -9,6 +9,7 @@ interface ButtonProps {
   size?: "sm" | "md" | "lg";
   onClick?: () => void;
   className?: string;
+  style?: CSSProperties; // ✅ added
 }
 
 export default function Button({
@@ -17,13 +18,16 @@ export default function Button({
   size = "md",
   onClick,
   className = "",
+  style,
 }: ButtonProps) {
-  const baseStyles = "rounded-full font-semibold transition-all relative overflow-hidden group";
-  
+  const baseStyles =
+    "rounded-full font-semibold transition-all relative overflow-hidden group";
+
   const variants = {
-    primary: "bg-[#919682] text-white hover:bg-[#7a7f6d]",
+    primary: "bg-[#FFE27A] text-[#6B4A00] hover:bg-[#7a7f6d]",
     secondary: "bg-[#595E48] text-white hover:bg-[#4a503d]",
-    outline: "border-2 border-[#919682] text-[#919682] hover:bg-[#919682] hover:text-white",
+    outline:
+      "border-2 border-[#919682] text-[#919682] hover:bg-[#919682] hover:text-white",
   };
 
   const sizes = {
@@ -37,11 +41,12 @@ export default function Button({
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
+      style={style} // ✅ passed through
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
     >
       <span className="relative z-10">{children}</span>
-      
-      {/* Ripple effect on hover */}
+
+      {/* Ripple effect */}
       <motion.span
         className="absolute inset-0 bg-white"
         initial={{ scale: 0, opacity: 0 }}

@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { crisisTheme } from "@/styles/Theme";
 
 const steps = [
   {
@@ -12,7 +13,7 @@ const steps = [
     description:
       "Our AI companion guides you through creating a personalized crisis plan. Add coping strategies, trusted contacts, and your reasons to stay—all in a safe, judgment-free space.",
     highlight: "5 minutes to complete",
-    color: "#C7A491",
+    color: crisisTheme.colors.primary,
   },
   {
     number: "02",
@@ -20,7 +21,7 @@ const steps = [
     description:
       "Write freely while AI helps you identify patterns, challenge negative narratives, and celebrate your strengths. Watch as your story transforms from problem-saturated to possibility-rich.",
     highlight: "Daily reflections",
-    color: "#919682",
+    color: crisisTheme.colors.secondary,
   },
   {
     number: "03",
@@ -28,7 +29,7 @@ const steps = [
     description:
       "In moments of crisis, one tap gives you voice support, your safety plan, and direct access to emergency resources. You're never alone.",
     highlight: "24/7 availability",
-    color: "#595E48",
+    color: crisisTheme.colors.textPrimary,
   },
   {
     number: "04",
@@ -36,30 +37,50 @@ const steps = [
     description:
       "See your progress with beautiful Story Wrapped insights that celebrate how far you've come. Every step forward matters.",
     highlight: "Monthly insights",
-    color: "#EECFCA",
+    color: crisisTheme.colors.primarySoft,
   },
 ];
 
 export default function HowItWorks() {
   const router = useRouter();
+
   return (
     <section
       id="how-it-works"
-      className="relative py-32 bg-gradient-to-br from-[#F5E8E0] to-[#EECFCA] overflow-hidden"
+      className="relative py-32 overflow-hidden"
+      style={{
+        background: `linear-gradient(
+          135deg,
+          ${crisisTheme.colors.background},
+          #FFF1D6
+        )`,
+      }}
     >
       {/* Ripped paper edge at top */}
       <div className="absolute top-0 left-0 right-0 transform -translate-y-1">
         <svg viewBox="0 0 1440 60" className="w-full h-auto" preserveAspectRatio="none">
           <path
             d="M0,40 C120,35 240,45 360,38 C480,31 600,25 720,28 C840,31 960,37 1080,34 C1200,31 1320,25 1380,22 L1440,20 L1440,0 L0,0 Z"
-            fill="white"
+            fill={crisisTheme.colors.surface}
           />
         </svg>
       </div>
 
       {/* Decorative blobs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-[#C7A491]/10 rounded-full mix-blend-multiply filter blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-72 h-72 bg-[#919682]/10 rounded-full mix-blend-multiply filter blur-3xl" />
+      <div
+        className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
+        style={{
+          background: crisisTheme.colors.primarySoft,
+          opacity: 0.35,
+        }}
+      />
+      <div
+        className="absolute bottom-20 right-10 w-72 h-72 rounded-full blur-3xl"
+        style={{
+          background: crisisTheme.colors.secondarySoft,
+          opacity: 0.35,
+        }}
+      />
 
       <div className="relative z-10 container mx-auto px-6">
         {/* Header */}
@@ -76,15 +97,30 @@ export default function HowItWorks() {
             transition={{ type: "spring", duration: 0.6 }}
             className="inline-block mb-6"
           >
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#C7A491] to-[#EECFCA] flex items-center justify-center shadow-xl">
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center shadow-xl"
+              style={{
+                background: `linear-gradient(
+                  135deg,
+                  ${crisisTheme.colors.primary},
+                  ${crisisTheme.colors.primarySoft}
+                )`,
+              }}
+            >
               <Sparkles className="w-10 h-10 text-white" />
             </div>
           </motion.div>
-          
-          <h2 className="text-6xl md:text-7xl font-serif text-[#595E48] mb-6">
+
+          <h2
+            className="text-6xl md:text-7xl font-serif mb-6"
+            style={{ color: crisisTheme.colors.textPrimary }}
+          >
             Your journey begins here
           </h2>
-          <p className="text-2xl text-[#919682] max-w-3xl mx-auto font-light">
+          <p
+            className="text-2xl max-w-3xl mx-auto font-light"
+            style={{ color: crisisTheme.colors.textSecondary }}
+          >
             Four simple steps to transform your mental wellness
           </p>
         </motion.div>
@@ -92,7 +128,17 @@ export default function HowItWorks() {
         {/* Vertical Timeline */}
         <div className="max-w-5xl mx-auto relative">
           {/* Connecting Line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#C7A491] via-[#919682] to-[#595E48] hidden md:block" />
+          <div
+            className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 hidden md:block"
+            style={{
+              background: `linear-gradient(
+                to bottom,
+                ${crisisTheme.colors.primary},
+                ${crisisTheme.colors.secondary},
+                ${crisisTheme.colors.textPrimary}
+              )`,
+            }}
+          />
 
           {/* Steps */}
           <div className="space-y-24">
@@ -109,9 +155,13 @@ export default function HowItWorks() {
           viewport={{ once: true }}
           className="text-center mt-24"
         >
-          <button 
-          onClick={() => router.push("/signup")}
-          className="group inline-flex items-center gap-3 px-10 py-5 bg-[#595E48] text-white rounded-full text-lg font-medium shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300"
+          <button
+            onClick={() => router.push("/signup")}
+            className="group inline-flex items-center gap-3 px-10 py-5 rounded-full text-lg font-medium shadow-2xl hover:scale-105 transition-all duration-300"
+            style={{
+              background: crisisTheme.colors.primary,
+              color: crisisTheme.colors.surface,
+            }}
           >
             <span>Start Your Journey</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -124,7 +174,7 @@ export default function HowItWorks() {
         <svg viewBox="0 0 1440 60" className="w-full h-auto" preserveAspectRatio="none">
           <path
             d="M0,20 C120,25 240,15 360,22 C480,29 600,35 720,32 C840,29 960,23 1080,26 C1200,29 1320,35 1380,38 L1440,40 L1440,60 L0,60 Z"
-            fill="white"
+            fill={crisisTheme.colors.surface}
           />
         </svg>
       </div>
@@ -159,15 +209,21 @@ function TimelineStep({
         isEven ? "md:flex-row" : "md:flex-row-reverse"
       } items-center gap-8`}
     >
-      {/* Number Circle - Center on desktop */}
+      {/* Number Circle */}
       <div className="hidden md:block absolute left-1/2 -translate-x-1/2 z-20">
         <motion.div
           whileHover={{ scale: 1.1, rotate: 360 }}
           transition={{ duration: 0.6 }}
-          className="w-20 h-20 rounded-full bg-white shadow-2xl flex items-center justify-center border-4"
-          style={{ borderColor: step.color }}
+          className="w-20 h-20 rounded-full shadow-2xl flex items-center justify-center border-4"
+          style={{
+            background: crisisTheme.colors.surface,
+            borderColor: step.color,
+          }}
         >
-          <span className="text-2xl font-bold" style={{ color: step.color }}>
+          <span
+            className="text-2xl font-bold"
+            style={{ color: step.color }}
+          >
             {step.number}
           </span>
         </motion.div>
@@ -178,9 +234,13 @@ function TimelineStep({
         <motion.div
           whileHover={{ y: -8, scale: 1.02 }}
           transition={{ duration: 0.3 }}
-          className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 relative"
+          className="rounded-3xl p-8 shadow-xl transition-all duration-300 relative"
+          style={{
+            background: "rgba(255,255,255,0.9)",
+            border: `1px solid ${crisisTheme.colors.border}`,
+          }}
         >
-          {/* Mobile number badge */}
+          {/* Mobile number */}
           <div className="md:hidden absolute -top-4 -left-4">
             <div
               className="w-14 h-14 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg"
@@ -191,22 +251,39 @@ function TimelineStep({
           </div>
 
           {/* Highlight pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#EECFCA]/30 to-[#C7A491]/30 mb-4">
-            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: step.color }} />
-            <span className="text-sm font-medium text-[#595E48]">{step.highlight}</span>
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4"
+            style={{
+              background: crisisTheme.colors.primarySoft,
+            }}
+          >
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: step.color }}
+            />
+            <span
+              className="text-sm font-medium"
+              style={{ color: crisisTheme.colors.textPrimary }}
+            >
+              {step.highlight}
+            </span>
           </div>
 
-          {/* Title */}
-          <h3 className="text-3xl md:text-4xl font-bold text-[#595E48] mb-4">
+          <h3
+            className="text-3xl md:text-4xl font-bold mb-4"
+            style={{ color: crisisTheme.colors.textPrimary }}
+          >
             {step.title}
           </h3>
 
-          {/* Description */}
-          <p className="text-lg text-[#919682] leading-relaxed">
+          <p
+            className="text-lg leading-relaxed"
+            style={{ color: crisisTheme.colors.textSecondary }}
+          >
             {step.description}
           </p>
 
-          {/* Decorative corner accent */}
+          {/* Decorative accent */}
           <div
             className="absolute bottom-4 right-4 w-16 h-16 rounded-full opacity-10"
             style={{ backgroundColor: step.color }}
@@ -214,7 +291,6 @@ function TimelineStep({
         </motion.div>
       </div>
 
-      {/* Spacer for alignment */}
       <div className="hidden md:block flex-1" />
     </motion.div>
   );
