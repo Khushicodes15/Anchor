@@ -10,6 +10,7 @@ import StepTransition from "@/components/crisis/StepTransition";
 import { useCrisisFlow } from "@/hooks/useCrisisFlow";
 import { useAuth } from "@/hooks/useAuth";
 import { crisisTheme } from "@/styles/Theme";
+import Loading from "./loading"; 
 
 export default function CrisisPage() {
   const { user, loading: authLoading } = useAuth();
@@ -37,7 +38,7 @@ export default function CrisisPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading crisis support…
+        <Loading />
       </div>
     );
   }

@@ -1,7 +1,7 @@
 "use client";
 
-import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut, sendPasswordResetEmail, User } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 export function useAuth() {
@@ -9,13 +9,28 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setLoading(false);
     });
 
-    return () => unsub();
+    return () => unsubscribe();
   }, []);
 
-  return { user, loading };
+  const logout = async () => {
+    await signOut(auth);
+  };
+
+  const resetPassword = async () => {
+    if (!user?.email) return;
+    await sendPasswordResetEmail(auth, user.email);
+  };
+
+  return {
+    user,
+    loading,
+    isAuthenticated: !!user,
+    logout,
+    resetPassword,
+  };
 }
