@@ -22,10 +22,13 @@ export default function CopingActions({ strategies, onNext }: Props) {
     >
       {/* LEFT CONTENT */}
       <div
-        className="flex-1 flex flex-col z-10"
+        className="
+          flex-1 flex flex-col z-10
+          px-5 sm:px-0
+        "
         style={{
-          paddingTop: "96px", // 🔑 pushes content BELOW navbar safely
-          paddingLeft: "8vw", // 🔑 moves away from extreme left
+          paddingTop: "96px", // desktop untouched
+          paddingLeft: "8vw", // desktop untouched
         }}
       >
         <h2
@@ -51,10 +54,14 @@ export default function CopingActions({ strategies, onNext }: Props) {
                 key={item}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setSelected(item)}
-                className="px-8 py-5 rounded-full text-left text-lg transition-colors"
+                className="
+                  px-8 py-5 rounded-full text-left text-lg
+                  transition-colors
+                  px-6 py-4 text-base sm:px-8 sm:py-5 sm:text-lg
+                "
                 style={{
                   background: isActive
-                    ? "#4F8F6A" // calm green confirmation
+                    ? "#4F8F6A"
                     : crisisTheme.colors.primarySoft,
                   color: isActive
                     ? "#FFFFFF"
@@ -72,7 +79,7 @@ export default function CopingActions({ strategies, onNext }: Props) {
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-8 text-lg max-w-md"
+            className="mt-8 text-lg max-w-md text-base sm:text-lg"
             style={{ color: crisisTheme.colors.textSecondary }}
           >
             You chose <strong>{selected}</strong>.
@@ -85,7 +92,11 @@ export default function CopingActions({ strategies, onNext }: Props) {
         <button
           disabled={!selected}
           onClick={onNext}
-          className="mt-10 w-fit px-12 py-4 rounded-full text-lg disabled:opacity-40"
+          className="
+            mt-10 w-fit rounded-full disabled:opacity-40
+            px-10 py-3 text-base
+            sm:px-12 sm:py-4 sm:text-lg
+          "
           style={{
             background: crisisTheme.colors.primary,
             color: "#FFFFFF",
@@ -95,11 +106,15 @@ export default function CopingActions({ strategies, onNext }: Props) {
         </button>
       </div>
 
-      {/* RIGHT QUADRANT */}
+      {/* RIGHT QUADRANT / SUN */}
       <motion.svg
         viewBox="0 0 1000 1000"
         preserveAspectRatio="xMaxYMax slice"
-        className="absolute bottom-0 right-0 w-[60vw] h-[60vw] pointer-events-none"
+        className="
+          absolute bottom-0 right-0 pointer-events-none
+          w-[120vw] h-[120vw]
+          sm:w-[60vw] sm:h-[60vw]
+        "
       >
         <circle cx="1000" cy="1000" r="520" fill="#FFE27A" />
         <circle cx="1000" cy="1000" r="420" fill="#FFD96A" />

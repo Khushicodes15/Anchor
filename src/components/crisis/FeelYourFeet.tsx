@@ -18,8 +18,9 @@ export default function GroundingFeet({
     >
       {/* Instruction */}
       <div className="mt-24 text-center z-20 px-6">
-        <h1 className="text-3xl font-medium leading-relaxed"
-         style={{ color: "#6B4A00" }}
+        <h1
+          className="text-3xl font-medium leading-relaxed"
+          style={{ color: "#6B4A00" }}
         >
           Place your feet on the ground.
           <br />
@@ -30,9 +31,11 @@ export default function GroundingFeet({
       <div className="flex-1 relative flex flex-col items-center">
         {/* MAN */}
         <motion.div
-          className="absolute left-1/2 bottom-[6vh] -translate-x-1/2 z-20"
+          className="
+            absolute left-1/2 -translate-x-1/2 z-20
+            bottom-[18vh] sm:bottom-[6vh]
+          "
           animate={{ y: [0, -4, 0] }}
-          
         >
           <Image
             src="/walking-man.png"
@@ -41,6 +44,7 @@ export default function GroundingFeet({
             height={520}
             priority
             draggable={false}
+            className="scale-110 sm:scale-100"
           />
         </motion.div>
 

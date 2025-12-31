@@ -17,10 +17,8 @@ export default function ReasonToLive({ reason, onFinish }: Props) {
         background: crisisTheme.colors.background,
       }}
     >
-      {/* TEXT CONTENT — NOT CENTERED */}
-      <div
-        className="absolute left-0 right-0 top-[18%] px-6 text-center z-10"
-      >
+      {/* TEXT CONTENT */}
+      <div className="absolute left-0 right-0 top-[18%] px-6 text-center z-10">
         <h2
           className="text-3xl font-medium mb-6"
           style={{ color: crisisTheme.colors.textSecondary }}
@@ -49,29 +47,38 @@ export default function ReasonToLive({ reason, onFinish }: Props) {
         </motion.button>
       </div>
 
-    {/* FULL-BLEED WAVES */}
-    <div className="absolute bottom-0 left-0 w-full h-[45%] pointer-events-none">
-      <svg
-        viewBox="0 0 1440 500"
-        preserveAspectRatio="none"
-        className="w-full h-full"
-      >
-        {/* GREEN BASE WAVE — ELEVATED ON SIDES, DIPS IN MIDDLE */}
+      {/* FULL-BLEED WAVES */}
+      <div className="absolute bottom-0 left-0 w-full h-[45%] pointer-events-none">
+        <svg
+          viewBox="0 0 1440 500"
+          preserveAspectRatio="none"
+          className="w-full h-full"
+        >
+          {/* MOBILE — SHORELINE (NO CENTER DIP) */}
         <path
           d="
-            M0,200
-            C360,160 520,280 720,300
-            C920,280 1080,160 1440,200
+            M0,280
+            C360,260 720,240 1080,220
+            C1200,210 1320,205 1440,200
             L1440,500 L0,500 Z
           "
           fill="#FFDD3C"
+          className="sm:hidden"
         />
 
-
-
-      </svg>
-    </div>
-
+          {/* DESKTOP WAVE — ORIGINAL */}
+          <path
+            d="
+              M0,200
+              C360,160 520,280 720,300
+              C920,280 1080,160 1440,200
+              L1440,500 L0,500 Z
+            "
+            fill="#FFDD3C"
+            className="hidden sm:block"
+          />
+        </svg>
+      </div>
     </section>
   );
 }

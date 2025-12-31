@@ -26,17 +26,28 @@ export default function SafeContacts({ contacts, onNext }: Props) {
 
   return (
     <section
-      className="fixed left-0 right-0 bottom-0 flex"
+      className="
+        fixed left-0 right-0 bottom-0
+        flex flex-col sm:flex-row
+      "
       style={{
         top: "60px",
         background: "#FFFFB7",
       }}
     >
       {/* LEFT — VISUAL */}
-      <div className="flex-1 flex items-center justify-center pointer-events-none">
+      <div
+        className="
+          flex-1 flex items-center justify-center pointer-events-none
+          py-10 sm:py-0
+        "
+      >
         <motion.svg
           viewBox="0 0 500 600"
-          className="w-[380px] h-[440px]"
+          className="
+            w-[260px] h-[300px]
+            sm:w-[380px] sm:h-[440px]
+          "
           animate={{ scale: [1, 1.025, 1] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -104,19 +115,26 @@ export default function SafeContacts({ contacts, onNext }: Props) {
       </div>
 
       {/* RIGHT — CONTACT ACTIONS */}
-      <div className="flex-1 flex flex-col justify-center pr-[8vw]">
+      <div
+        className="
+          flex-1 flex flex-col justify-center
+          px-6 sm:px-0
+          pb-12 sm:pb-0
+          pr-0 sm:pr-[8vw]
+        "
+      >
         <h2
-          className="text-3xl font-medium mb-10"
+          className="text-2xl sm:text-3xl font-medium mb-8 sm:mb-10"
           style={{ color: crisisTheme.colors.textSecondary }}
         >
           You don’t have to do this alone
         </h2>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5 sm:gap-6">
           {contacts.map((contact) => (
             <div key={contact.name} className="flex items-center gap-4">
               <span
-                className="text-lg w-40"
+                className="text-base sm:text-lg w-32 sm:w-40"
                 style={{ color: crisisTheme.colors.textSecondary }}
               >
                 {contact.name}
@@ -125,10 +143,9 @@ export default function SafeContacts({ contacts, onNext }: Props) {
               {contact.phone && (
                 <>
                   <motion.button
-                    whileHover={{ y: -2, boxShadow: "0 8px 20px rgba(0,0,0,0.12)" }}
                     whileTap={{ scale: 0.96 }}
                     onClick={() => call(contact.phone)}
-                    className="px-6 py-3 rounded-full text-sm"
+                    className="px-5 py-3 rounded-full text-sm"
                     style={{
                       background: "#FF9F1C",
                       color: "#FFFFFF",
@@ -138,10 +155,9 @@ export default function SafeContacts({ contacts, onNext }: Props) {
                   </motion.button>
 
                   <motion.button
-                    whileHover={{ y: -2, boxShadow: "0 8px 20px rgba(0,0,0,0.12)" }}
                     whileTap={{ scale: 0.96 }}
                     onClick={() => message(contact.phone)}
-                    className="px-6 py-3 rounded-full text-sm"
+                    className="px-5 py-3 rounded-full text-sm"
                     style={{
                       background: "#4F8F6A",
                       color: "#FFFFFF",
@@ -156,10 +172,14 @@ export default function SafeContacts({ contacts, onNext }: Props) {
         </div>
 
         <motion.button
-          whileHover={{ y: -2, boxShadow: "0 10px 24px rgba(0,0,0,0.18)" }}
           whileTap={{ scale: 0.96 }}
           onClick={onNext}
-          className="mt-14 w-fit px-14 py-4 rounded-full text-lg"
+          className="
+            mt-10 sm:mt-14
+            w-fit px-12 sm:px-14
+            py-4 rounded-full
+            text-base sm:text-lg
+          "
           style={{
             background: crisisTheme.colors.primary,
             color: "#FFFFFF",
