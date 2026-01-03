@@ -4,23 +4,26 @@ import AppNavbar from "@/components/navigation/AppNavbar";
 import SettingsLayout from "@/components/settings/SettingsLayout";
 
 import ProfileSection from "@/components/settings/ProfileSection";
-import LanguageSection from "@/components/settings/LanguageSection";
+import PreferencesSection from "@/components/settings/PreferencesSection";
 import NotificationsSection from "@/components/settings/NotificationsSection";
 import SecuritySection from "@/components/settings/SecuritySection";
 import AboutSection from "@/components/settings/AboutSection";
 import LogoutSection from "@/components/settings/LogoutSection";
-import Loading from "@/app/crisis/loading"; 
-import { useAuth } from "@/hooks/useAuth";
+
+import Loading from "@/app/crisis/loading";
 import Button from "@/components/ui/Button";
+
+import { useAuth } from "@/hooks/useAuth";
+import { useSettings } from "@/hooks/useSettings";
 import { useRouter } from "next/navigation";
 import { crisisTheme } from "@/styles/Theme";
 
 export default function SettingsPage() {
-  const { user, loading, isAuthenticated } = useAuth();
+  const { loading: authLoading, isAuthenticated } = useAuth();
+  const { settings, loading: settingsLoading } = useSettings();
   const router = useRouter();
 
-  // While auth state is resolving, let loading.tsx handle UI
-  if (loading) {
+  if (authLoading || settingsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loading />
@@ -33,8 +36,7 @@ export default function SettingsPage() {
       <AppNavbar />
 
       <SettingsLayout>
-        {/* If NOT signed in */}
-        {/* {!isAuthenticated && (
+        {!isAuthenticated && (
           <div
             className="rounded-3xl p-8 text-center"
             style={{
@@ -53,40 +55,27 @@ export default function SettingsPage() {
               className="text-sm mb-6"
               style={{ color: crisisTheme.colors.textSecondary }}
             >
-              You need to be signed in to view and manage your account settings.
+              You need to be signed in to manage your account settings.
             </p>
 
-            <Button size="md" onClick={() => router.push("/login")}>
+            <Button onClick={() => router.push("/signin")}>
               Sign In
             </Button>
           </div>
-        )} */}
+        )}
 
-        {/* If signed in */}
-        {/* {isAuthenticated && (
+        {isAuthenticated && settings && (
           <>
-            <ProfileSection />
-            <LanguageSection />
+            <ProfileSection profile={settings.profile} />
+            <PreferencesSection preferences={settings.preferences} />
             <NotificationsSection />
             <SecuritySection />
             <AboutSection />
             <LogoutSection />
           </>
-        )} */}
-
-        {/* DEV ONLY delete after fully working backend*/}
-        {true && (
-        <>
-            <ProfileSection />
-            <NotificationsSection />
-            <LanguageSection />
-            <SecuritySection />
-            <AboutSection />
-            <LogoutSection />
-        </>
         )}
-
       </SettingsLayout>
     </>
   );
 }
+

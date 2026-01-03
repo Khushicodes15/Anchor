@@ -8,6 +8,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "outline";
   size?: "sm" | "md" | "lg";
   onClick?: () => void;
+  disabled?: boolean;
   className?: string;
   style?: CSSProperties; // ✅ added
 }

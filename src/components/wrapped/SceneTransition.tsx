@@ -24,7 +24,7 @@ export default function SceneTransition({
           duration: 0.6,
           ease: "easeInOut",
         }}
-        className="w-full h-full"
+        className="w-screen h-screen overflow-hidden"
       >
         {children}
       </motion.div>

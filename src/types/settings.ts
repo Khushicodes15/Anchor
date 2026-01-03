@@ -1,21 +1,40 @@
 // src/types/settings.ts
 
-export interface SettingsSectionConfig {
-  id: string;
-  title: string;
-  description?: string;
-}
-
-export interface ProfileInfo {
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  provider: string | null;
-}
-
-export type LanguageCode = "en";
-
-export interface AppMetadata {
+export interface ProfileSettings {
   name: string;
-  version: string;
+  phone: string;
+  email: string;
 }
+
+export interface PreferencesSettings {
+  language: string;
+  dark_mode: boolean;
+  notifications_enabled: boolean;
+}
+
+export interface SecuritySettings {
+  logout_all_devices: boolean;
+}
+
+/**
+ * Canonical settings shape
+ * Used across:
+ * - useSettings hook
+ * - settingsApi
+ * - UI components
+ */
+export interface SettingsData {
+  profile: ProfileSettings;
+  preferences: PreferencesSettings;
+  security: SecuritySettings;
+}
+
+/**
+ * Backend GET /settings response
+ */
+export type SettingsResponse = SettingsData;
+
+/**
+ * Backend POST /settings payload
+ */
+export type SettingsPayload = SettingsData;
