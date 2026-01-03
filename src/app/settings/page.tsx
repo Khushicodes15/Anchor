@@ -20,10 +20,10 @@ import { crisisTheme } from "@/styles/Theme";
 
 export default function SettingsPage() {
   const { loading: authLoading, isAuthenticated } = useAuth();
-  const { settings, loading: settingsLoading } = useSettings();
+  const { settings, status } = useSettings();
   const router = useRouter();
 
-  if (authLoading || settingsLoading) {
+  if (authLoading || status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loading />
