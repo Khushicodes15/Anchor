@@ -43,9 +43,9 @@ const SignInForm = ({
   return (
     <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-lg border border-gray-100">
       <div className="p-6 space-y-6 sm:p-8">
-        <h1 className="text-xl font-bold leading-tight tracking-tight text-backgroundColor md:text-2xl text-center">
+        <h1 className="text-xl font-heading leading-tight tracking-tight text-backgroundColor md:text-2xl text-center">
           Welcome Back
-          <p className="text-sm font-normal text-gray-500 mt-1">
+          <p className="text-sm font-body text-gray-500 mt-1">
             Sign in to your account
           </p>
         </h1>

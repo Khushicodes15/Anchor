@@ -91,7 +91,7 @@ const SlidingLoginSignup = () => {
                   : ""
               }`}
           >
-            <h3 className="font-semibold text-white text-[1.2rem] lg:text-[1.5rem]">
+            <h3 className="font-heading text-white text-[1.2rem] lg:text-[1.5rem]">
               New to Anchor?
             </h3>
             <p className="text-[0.7rem] lg:text-[0.95rem] py-2">
@@ -125,7 +125,7 @@ const SlidingLoginSignup = () => {
                   : "lg:translate-x-[800px] max-lg:translate-y-[300px]"
               }`}
           >
-<h3 className="font-semibold text-white text-[1.4rem] lg:text-[1.75rem]">
+<h3 className="font-heading text-white text-[1.4rem] lg:text-[1.75rem]">
   One of us?
 </h3>
 
@@ -142,7 +142,7 @@ const SlidingLoginSignup = () => {
     transition-colors duration-300
     hover:bg-white hover:text-gray-700"
 >
-  Sign up
+  Sign in
 </button>
 
           </div>
@@ -153,4 +153,3 @@ const SlidingLoginSignup = () => {
 };
 
 export default SlidingLoginSignup;
-
