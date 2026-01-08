@@ -117,6 +117,7 @@ export default function Hero() {
               </button>
 
               <button
+                onClick={() => router.push("/dashboard")}
                 className="px-10 py-4 rounded-full text-lg shadow-xl transition"
                 style={{
                   background: "rgba(255,255,255,0.9)",
@@ -124,7 +125,7 @@ export default function Hero() {
                   border: `1px solid ${crisisTheme.colors.border}`,
                 }}
               >
-                Watch Demo
+                Try Anchor
               </button>
             </div>
           </div>
