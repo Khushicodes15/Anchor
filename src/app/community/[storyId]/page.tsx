@@ -25,8 +25,11 @@ export default function CommunityStoryPage() {
   }
 
   return (
-    <EnvelopeOpenAnimation onClose={() => router.push("/community")}>
-      <StoryContent story={story} />
+    <EnvelopeOpenAnimation>
+      <StoryContent
+        story={story}
+        onClose={() => router.push("/community")}
+      />
     </EnvelopeOpenAnimation>
   );
 }

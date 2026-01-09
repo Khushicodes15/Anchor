@@ -1,46 +1,62 @@
 "use client";
 
-import { useState } from "react";
-import { submitCommunityStory } from "@/services/communityApi";
+import { useEffect, useState } from "react";
+import { fetchCommunityStories } from "@/services/communityApi";
+import type { CommunityStory } from "@/types/community";
 
-type ErrorType = "auth" | "content" | "unknown" | null;
+type Status = "loading" | "ready" | "error";
 
-export function useSubmitCommunityStories() {
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<ErrorType>(null);
+export function useCommunityStory(storyId?: string) {
+  const [story, setStory] = useState<CommunityStory | null>(null);
+  const [status, setStatus] = useState<Status>("loading");
+  const [error, setError] = useState<string | null>(null);
 
-  async function submit(payload: {
-    story: string;
-    tags: string[];
-  }) {
-    try {
-      setLoading(true);
-      setError(null);
-
-      await submitCommunityStory(payload);
-      setSubmitted(true);
-    } catch (err) {
-      if (err instanceof Error) {
-        if (err.message === "AUTH_REQUIRED") {
-          setError("auth");
-          return;
-        }
-        if (err.message === "CONTENT_BLOCKED") {
-          setError("content");
-          return;
-        }
-      }
-      setError("unknown");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (!storyId) {
+      setStatus("error");
+      setError("Story ID missing");
+      return;
     }
-  }
+
+    let active = true;
+
+    async function load() {
+      try {
+        setStatus("loading");
+
+        const stories = await fetchCommunityStories();
+        const found = stories.find((s) => s.id === storyId);
+
+        if (!active) return;
+
+        if (!found) {
+          setStatus("error");
+          setError("Story not found");
+          return;
+        }
+
+        setStory(found);
+        setStatus("ready");
+      } catch (err) {
+        if (!active) return;
+
+        setStatus("error");
+        setError(
+          err instanceof Error ? err.message : "Failed to load story"
+        );
+      }
+    }
+
+    load();
+
+    return () => {
+      active = false;
+    };
+  }, [storyId]);
 
   return {
-    submit,
-    loading,
-    submitted,
+    story,
+    status,
     error,
   };
 }
