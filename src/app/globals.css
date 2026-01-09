@@ -77,3 +77,50 @@ body {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+
+/* ===============================
+   THEME VARIABLES (from theme.ts)
+   =============================== */
+:root {
+  /* Backgrounds */
+  --color-background: #FFF7E6;
+  --color-surface: #FFFFFF;
+
+  /* Primary */
+  --color-primary: #FF9F1C;
+  --color-primary-soft: #FFE27A;
+
+  /* Secondary */
+  --color-secondary: #4E8D6A;
+  --color-secondary-soft: #E6F3EC;
+
+  /* Text */
+  --color-text-primary: #2F3326;
+  --color-text-secondary: #5E6453;
+  --color-text-tertiary: #6B4A00;
+
+  /* Accent & borders */
+  --color-accent: #FFDD3C;
+  --color-border: rgba(0, 0, 0, 0.08);
+
+  /* Chat history */
+  --color-history-bg: #FFF3CC;
+  --color-history-hover: #FFE8A3;
+}
+
+/* Font utilities */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+
