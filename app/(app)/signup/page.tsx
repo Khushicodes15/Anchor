@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import SignInForm from "./components/SignInForm";
-import SignUpForm from "./components/SignUpForm";
+import SignInForm from "../../components/SignInForm";
+import SignUpForm from "../../components/SignUpForm";
 
 const SlidingLoginSignup = () => {
   const [isSignUpMode, setIsSignUpMode] = useState<boolean>(false);

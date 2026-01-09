@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 
-import { headingFont, bodyFont } from "./fonts";
+import { headingFont, bodyFont } from "../../styles/fonts";
 
 export const metadata: Metadata = {
   title: "Sliding Signin Signup",
