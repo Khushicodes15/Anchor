@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CommunityStory } from "@/types/community";
 
 import EnvelopeOpenAnimation from "./EnvelopeOpenAnimation";
@@ -9,7 +9,6 @@ import EnvelopeCloseAnimation from "./EnvelopeCloseAnimation";
 import PaperSheet from "./PaperSheet";
 import Button from "@/components/ui/Button";
 
-/* ✅ ADDED */
 import LikeButton from "@/components/community/interactions/LikeButton";
 import SaveButton from "@/components/community/interactions/SaveButton";
 
@@ -23,11 +22,20 @@ export default function StoryContent({
   const [closing, setClosing] = useState(false);
   const [closedDone, setClosedDone] = useState(false);
 
+  // ✅ CRITICAL FIX: reset animation state on new story
+  useEffect(() => {
+    if (story) {
+      setClosing(false);
+      setClosedDone(false);
+    }
+  }, [story?.id]);
+
   if (!story) return null;
 
   return (
     <AnimatePresence>
       <motion.div
+        key={story.id}
         className="fixed inset-0 z-50 flex items-center justify-center px-6 overflow-y-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -37,9 +45,10 @@ export default function StoryContent({
         {/* OPEN / READING */}
         {!closing && (
           <EnvelopeOpenAnimation>
-            <PaperSheet story={story} />
+            <ScrollablePaper>
+              <PaperSheet story={story} />
+            </ScrollablePaper>
 
-            {/* ✅ ADDED: LIKE + SAVE */}
             <div className="mt-6 flex justify-center gap-8">
               <LikeButton
                 storyId={story.id}
@@ -67,7 +76,9 @@ export default function StoryContent({
           <EnvelopeCloseAnimation
             onComplete={() => setClosedDone(true)}
           >
-            <PaperSheet story={story} />
+            <ScrollablePaper>
+              <PaperSheet story={story} />
+            </ScrollablePaper>
           </EnvelopeCloseAnimation>
         )}
 
@@ -89,15 +100,27 @@ export default function StoryContent({
               Read again
             </Button>
 
-            <Button
-              variant="outline"
-              onClick={onClose}
-            >
+            <Button variant="outline" onClick={onClose}>
               Back to library
             </Button>
           </motion.div>
         )}
       </motion.div>
     </AnimatePresence>
+  );
+}
+
+/* =========================================
+   FIX: paper scrolls, envelope size is stable
+   ========================================= */
+function ScrollablePaper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="relative w-full max-w-xl max-h-[70vh] overflow-y-auto">
+      {children}
+    </div>
   );
 }

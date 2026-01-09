@@ -3,11 +3,11 @@ import AppNavbar from "@/components/navigation/AppNavbar";
 import { crisisTheme } from "@/styles/Theme";
 import { headingFont, bodyFont } from "@/styles/fonts";
 
-export default function CommunityLayout({ 
+export default function CommunityLayout({
   children,
 }: {
-  children: React.ReactNode;
-}) { 
+  children: ReactNode;
+}) {
   return (
     <div
       className="relative min-h-screen flex flex-col overflow-hidden"
@@ -31,15 +31,15 @@ export default function CommunityLayout({
         }}
       />
 
-      {/* STREET LIGHT DECOR */}
+      {/* STREET LIGHT DECOR — FIXED TO VIEWPORT */}
       <img
         src="/streetlight.png"
         alt=""
         className="
           pointer-events-none
-          absolute
-          left-[-100]
-          bottom-2
+          fixed
+          left-[-100px]
+          bottom-0
           h-[95vh]
           max-h-[720px]
           opacity-80
@@ -53,12 +53,14 @@ export default function CommunityLayout({
         style={{
           background: crisisTheme.colors.surface,
           borderBottom: `1px solid ${crisisTheme.colors.border}`,
+          position: "relative",
+          zIndex: 10,
         }}
       >
         <AppNavbar />
       </div>
 
-      <main className="flex-1 flex justify-center px-6 py-16">
+      <main className="flex-1 flex justify-center px-6 py-16 relative z-10">
         <div className="w-full max-w-4xl">{children}</div>
       </main>
     </div>

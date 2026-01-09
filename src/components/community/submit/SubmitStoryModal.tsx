@@ -26,7 +26,7 @@ export default function SubmitStoryModal({
   async function handleSubmit() {
     if (!story.trim()) return;
 
-    submit({
+    await submit({
       story: story.trim(),
       tags: tags
         .split(",")
@@ -52,11 +52,12 @@ export default function SubmitStoryModal({
             initial={{ y: 24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 24, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full max-w-xl bg-white rounded-3xl p-8 shadow-xl border"
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="w-full max-w-xl rounded-3xl p-8 shadow-xl border bg-white"
             style={{ borderColor: crisisTheme.colors.border }}
           >
             {submitted ? (
+              /* ================= SUCCESS ================= */
               <div className="flex flex-col items-center text-center gap-6">
                 <h2
                   className="text-2xl font-medium"
@@ -71,10 +72,7 @@ export default function SubmitStoryModal({
                 >
                   Your story has been received.
                   <br />
-                  It will be reviewed before appearing in the Community Library.
-                  <br />
-                  <br />
-                  We’re grateful you chose to share this.
+                  It will appear in the Community Library after review.
                 </p>
 
                 <Button variant="primary" onClick={onClose}>
@@ -82,6 +80,7 @@ export default function SubmitStoryModal({
                 </Button>
               </div>
             ) : (
+              /* ================= FORM ================= */
               <>
                 <h2
                   className="text-2xl font-medium mb-6 text-center"
@@ -95,10 +94,11 @@ export default function SubmitStoryModal({
                   onChange={e => setStory(e.target.value)}
                   rows={6}
                   placeholder="Write only what feels safe to share…"
-                  className="w-full rounded-2xl p-4 mb-4 outline-none resize-none border"
+                  className="w-full rounded-2xl p-4 mb-4 resize-none border outline-none"
                   style={{
                     borderColor: crisisTheme.colors.border,
                     color: crisisTheme.colors.textPrimary,
+                    background: "#FFFFFF",
                   }}
                 />
 
@@ -106,18 +106,17 @@ export default function SubmitStoryModal({
                   value={tags}
                   onChange={e => setTags(e.target.value)}
                   placeholder="Optional tags (comma separated)"
-                  className="w-full rounded-full px-4 py-3 mb-6 outline-none border"
+                  className="w-full rounded-full px-4 py-3 mb-4 border outline-none"
                   style={{
                     borderColor: crisisTheme.colors.border,
                     color: crisisTheme.colors.textPrimary,
+                    background: "#FFFFFF",
                   }}
                 />
 
+                {/* ✅ CLEAR ERROR VISIBILITY */}
                 {error && (
-                  <p
-                    className="text-sm mb-4 text-center"
-                    style={{ color: crisisTheme.colors.textSecondary }}
-                  >
+                  <p className="text-sm mb-4 text-center text-red-600">
                     {error}
                   </p>
                 )}
@@ -136,7 +135,7 @@ export default function SubmitStoryModal({
                     onClick={handleSubmit}
                     disabled={loading}
                   >
-                    {loading ? "Leaving…" : "Submit"}
+                    {loading ? "Submitting…" : "Submit"}
                   </Button>
                 </div>
               </>

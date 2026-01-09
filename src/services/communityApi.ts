@@ -1,75 +1,69 @@
-import { CommunityStory } from "@/types/community";
+// src/services/communityApi.ts
+import { auth } from "@/lib/firebase";
+import type { CommunityStory } from "@/types/community";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-/* =====================================================
-   FETCH ALL STORIES
-   ===================================================== */
+/* ===============================
+   FETCH STORIES
+   =============================== */
 export async function fetchCommunityStories(): Promise<CommunityStory[]> {
-  if (!API_BASE_URL) throw new Error("API base URL missing");
+  if (!API_BASE_URL) throw new Error("API_BASE_URL_MISSING");
 
-  const res = await fetch(`${API_BASE_URL}/community/stories`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${API_BASE_URL}/community/fetch/stories`,
+    { cache: "no-store" }
+  );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch community stories");
+    throw new Error("FETCH_FAILED");
   }
 
   const json = await res.json();
-
-  if (!json || !Array.isArray(json.stories)) {
-    return [];
-  }
-
-  return json.stories;
+  return Array.isArray(json.stories) ? json.stories : [];
 }
 
-/* =====================================================
+/* ===============================
    SUBMIT STORY
-   ===================================================== */
+   =============================== */
 export async function submitCommunityStory(payload: {
   story: string;
   tags: string[];
 }): Promise<void> {
   if (!API_BASE_URL) throw new Error("API base URL missing");
 
-  const res = await fetch(`${API_BASE_URL}/community/story`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(
+    `${API_BASE_URL}/community/post/story`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
 
   if (!res.ok) {
-    throw new Error("Story submission failed");
+    const text = await res.text();
+    throw new Error(text || "Story submission failed");
   }
 }
 
-/* =====================================================
-   REACTIONS (ONE-WAY, FAIL-SOFT)
-   ===================================================== */
-export async function likeCommunityStory(storyId: string): Promise<void> {
+/* ===============================
+   REACTIONS (FAIL-SOFT)
+   =============================== */
+export async function likeCommunityStory(storyId: string) {
   if (!API_BASE_URL) return;
 
-  try {
-    await fetch(`${API_BASE_URL}/community/story/${storyId}/like`, {
-      method: "POST",
-    });
-  } catch {
-    // silent by design
-  }
+  fetch(`${API_BASE_URL}/community/story/like?story_id=${storyId}`, {
+    method: "POST",
+  }).catch(() => {});
 }
 
-export async function saveCommunityStory(storyId: string): Promise<void> {
+export async function saveCommunityStory(storyId: string) {
   if (!API_BASE_URL) return;
 
-  try {
-    await fetch(`${API_BASE_URL}/community/story/${storyId}/save`, {
-      method: "POST",
-    });
-  } catch {
-    // silent by design
-  }
+  fetch(`${API_BASE_URL}/community/story/save?story_id=${storyId}`, {
+    method: "POST",
+  }).catch(() => {});
 }
