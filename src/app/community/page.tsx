@@ -22,27 +22,7 @@ export default function CommunityArchivePage() {
     return <LoadingPaper />;
   }
 
-  /* ===============================
-     EMPTY ARCHIVE
-     =============================== */
-  if (status !== "loading" && stories.length === 0) {
-    return (
-      <>
-      
-        <EmptyPaper />
 
-        {/* Quiet invitation below empty state */}
-        <div className="mt-[-15] flex justify-center">
-          <SubmitStoryButton onClick={() => setShowSubmit(true)} />
-        </div>
-
-        <SubmitStoryModal
-          open={showSubmit}
-          onClose={() => setShowSubmit(false)}
-        />
-      </>
-    );
-  }
 
   /* ===============================
      ARCHIVE CONTENT
