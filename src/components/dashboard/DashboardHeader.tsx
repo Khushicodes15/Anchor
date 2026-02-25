@@ -29,7 +29,7 @@ export default function DashboardHeader() {
           }}
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium"
           style={{
-            background: crisisTheme.colors.secondarySoft,
+            background: crisisTheme.colors.secondary,
             color: crisisTheme.colors.textPrimary,
             border: `1px solid ${crisisTheme.colors.border}`,
             willChange: "transform",

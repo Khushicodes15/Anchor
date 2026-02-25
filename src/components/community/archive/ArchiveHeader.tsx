@@ -17,27 +17,44 @@ export default function ArchiveHeader({
         duration: crisisTheme.animation.normal,
         ease: crisisTheme.animation.ease,
       }}
-      className="
-        relative
-        -mt-4 md:-mt-8     /* ⬆️ move up slightly on all, more on desktop */
-        mb-6 md:mb-8
-      "
+      className="relative -mt-4 md:-mt-8 mb-6 md:mb-8"
     >
       <div className="relative w-full max-w-6xl mx-auto px-6">
-        {/* DESKTOP: right-aligned action */}
-        <div className="hidden md:block absolute right-[-150] top-1/4 -translate-y-1/2">
-          <SubmitStoryButton onClick={onSubmit} />
+
+        {/* DESKTOP: 3-col grid — spacer | title+subtitle | button */}
+        <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <div />
+
+          <div className="flex flex-col gap-4 text-center">
+            <h1
+              className="text-3xl md:text-4xl font-medium"
+              style={{ color: crisisTheme.colors.textPrimary }}
+            >
+              Community Library
+            </h1>
+            <p
+              className="max-w-2xl mx-auto text-base leading-relaxed"
+              style={{ color: crisisTheme.colors.textSecondary }}
+            >
+              A quiet archive of personal reflections left anonymously.
+              <br />
+              Read only what feels right.
+            </p>
+          </div>
+
+          <div className="flex justify-end">
+            <SubmitStoryButton onClick={onSubmit} />
+          </div>
         </div>
 
-        {/* CENTERED TITLE + SUBTITLE */}
-        <div className="flex flex-col gap-4 text-center">
+        {/* MOBILE: stacked */}
+        <div className="flex flex-col gap-4 text-center md:hidden">
           <h1
-            className="text-3xl md:text-4xl font-medium"
+            className="text-3xl font-medium"
             style={{ color: crisisTheme.colors.textPrimary }}
           >
             Community Library
           </h1>
-
           <p
             className="max-w-2xl mx-auto text-base leading-relaxed"
             style={{ color: crisisTheme.colors.textSecondary }}
@@ -46,12 +63,11 @@ export default function ArchiveHeader({
             <br />
             Read only what feels right.
           </p>
+          <div className="mt-2 flex justify-center">
+            <SubmitStoryButton onClick={onSubmit} />
+          </div>
         </div>
 
-        {/* MOBILE: button under header */}
-        <div className="mt-6 flex justify-center md:hidden">
-          <SubmitStoryButton onClick={onSubmit} />
-        </div>
       </div>
     </motion.header>
   );

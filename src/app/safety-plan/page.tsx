@@ -197,7 +197,7 @@ export default function SafetyPlanPage() {
           isLastStep={isLastStep}
           error={saveError}
           authRequired={authRequired}
-          onSignIn={() => router.push("/login")}
+          onSignIn={() => router.push("/signup")}
         />
       </div>
     </SafetyPlanLayout>

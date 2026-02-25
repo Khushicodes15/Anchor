@@ -64,7 +64,7 @@ export default function CrisisSignInPage() {
 
           <Button
             variant="primary"
-            onClick={() => router.push("/signin")}
+            onClick={() => router.push("/signup")}
           >
             Sign in
           </Button>

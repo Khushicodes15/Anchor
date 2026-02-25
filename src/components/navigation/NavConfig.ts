@@ -70,7 +70,7 @@ export const navConfig: NavItemConfig[] = [
   },
   {
     label: "Log out",
-    href: "/logout",
+    href: "/signup",
     icon: LogOut,
     section: "utility",
   },

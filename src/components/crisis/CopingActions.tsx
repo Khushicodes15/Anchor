@@ -40,10 +40,10 @@ export default function CopingActions({ strategies, onNext }: Props) {
 
         {/* STRATEGIES */}
         <div
-          className="grid gap-5 max-w-xl"
+          className="grid gap-4 max-w-xl"
           style={{
             gridTemplateColumns:
-              strategies.length > 4 ? "1fr 1fr" : "1fr",
+              strategies.length > 2 ? "1fr 1fr" : "1fr",
           }}
         >
           {strategies.map((item) => {

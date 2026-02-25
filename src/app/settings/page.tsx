@@ -58,7 +58,7 @@ export default function SettingsPage() {
               You need to be signed in to manage your account settings.
             </p>
 
-            <Button onClick={() => router.push("/signin")}>
+            <Button onClick={() => router.push("/signup")}>
               Sign In
             </Button>
           </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@/components/ui/Button";
-import { motion } from "framer-motion";
 import { crisisTheme } from "@/styles/Theme";
 
 export default function SubmitStoryButton({
@@ -9,13 +8,11 @@ export default function SubmitStoryButton({
 }: {
   onClick: () => void;
 }) {
+  // ✅ Fix: motion.div was creating a stacking context above the navbar.
+  // Plain div has no stacking context — framer-motion on the parent
+  // motion.header already handles the entrance animation for this button.
   return (
-    <motion.div
-      className="flex justify-center"
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
+    <div className="flex justify-center">
       <Button
         variant="outline"
         onClick={onClick}
@@ -26,6 +23,6 @@ export default function SubmitStoryButton({
       >
         Leave a story
       </Button>
-    </motion.div>
+    </div>
   );
 }
