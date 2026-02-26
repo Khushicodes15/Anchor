@@ -75,3 +75,13 @@ export async function getSessionMessages(sessionId: string) {
   if (!res.ok) throw new Error("session failed");
   return res.json();
 }
+export async function getJournals() {
+  const token = await getAuthToken();
+
+  const res = await fetch(`${API_BASE}/journals/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) throw new Error("journals failed");
+  return res.json();
+}
