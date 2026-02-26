@@ -21,18 +21,30 @@ export type SessionSummary = {
   created_at: string;
 };
 
+
 async function getAuthToken(): Promise<string> {
-  const user = auth.currentUser;
-  if (user) return user.getIdToken();
+  // Fast path — Firebase already hydrated
+  if (auth.currentUser) {
+    return auth.currentUser.getIdToken();
+  }
+
 
   return new Promise((resolve, reject) => {
-    const unsub = onAuthStateChanged(auth, async (u) => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
       unsub();
-      if (!u) return reject(new Error("Not authenticated"));
-      resolve(await u.getIdToken());
+      if (!user || user.isAnonymous) {
+        reject(new Error("Not authenticated"));
+        return;
+      }
+      try {
+        resolve(await user.getIdToken());
+      } catch (err) {
+        reject(err);
+      }
     });
   });
 }
+
 
 export async function createJournal(content: string, sessionId?: string) {
   const token = await getAuthToken();
@@ -43,8 +55,10 @@ export async function createJournal(content: string, sessionId?: string) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
+
+    cache: "no-store",
     body: JSON.stringify({
-      title: "Journal reflection",
+      title: content.trim().slice(0, 40),
       content,
       session_id: sessionId ?? null,
     }),
@@ -54,34 +68,44 @@ export async function createJournal(content: string, sessionId?: string) {
   return res.json();
 }
 
-export async function getSessions() {
+/* ── Get sidebar session list ───────────────────────────────────────────── */
+export async function getSessions(): Promise<SessionSummary[]> {
   const token = await getAuthToken();
 
   const res = await fetch(`${API_BASE}/journals/sessions`, {
     headers: { Authorization: `Bearer ${token}` },
+    
+    cache: "no-store",
   });
 
-  if (!res.ok) throw new Error("sessions failed");
+  if (!res.ok) throw new Error(`sessions fetch failed: ${res.status}`);
   return res.json();
 }
 
-export async function getSessionMessages(sessionId: string) {
+/* ── Get all messages for a session ────────────────────────────────────── */
+export async function getSessionMessages(sessionId: string): Promise<JournalResponse[]> {
   const token = await getAuthToken();
 
   const res = await fetch(`${API_BASE}/journals/session/${sessionId}`, {
     headers: { Authorization: `Bearer ${token}` },
+    // ✅ no-store: session messages can grow at any time
+    cache: "no-store",
   });
 
-  if (!res.ok) throw new Error("session failed");
+  if (!res.ok) throw new Error(`session fetch failed: ${res.status}`);
   return res.json();
 }
-export async function getJournals() {
+
+
+export async function getJournals(): Promise<JournalResponse[]> {
   const token = await getAuthToken();
 
   const res = await fetch(`${API_BASE}/journals/`, {
     headers: { Authorization: `Bearer ${token}` },
+   
+    cache: "no-store",
   });
 
-  if (!res.ok) throw new Error("journals failed");
+  if (!res.ok) throw new Error(`journals fetch failed: ${res.status}`);
   return res.json();
 }

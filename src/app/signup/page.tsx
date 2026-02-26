@@ -9,97 +9,90 @@ const SlidingLoginSignup = () => {
 
   const toggleSignUpMode = (): void => setIsSignUpMode((prev) => !prev);
 
+  // Green replaces orange — yellow accent kept for toggle pills
   const buttonClasses =
-    "w-full text-[#2F3326] bg-[#FF9F1C] hover:bg-[#e8890a] focus:ring-4 focus:outline-none focus:ring-[#FFE27A] font-medium rounded-lg text-sm px-5 py-3 text-center transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md";
+    "w-full text-white bg-[#4E8D6A] hover:bg-[#3d7055] focus:ring-4 focus:outline-none focus:ring-[#E6F3EC] font-medium rounded-lg text-sm px-5 py-3 text-center transition-all duration-200 transform hover:scale-[1.02] hover:shadow-md";
 
   const buttonForGFT =
-    "inline-flex w-full justify-center items-center rounded-lg border border-[rgba(0,0,0,0.08)] bg-[#FFF7E6] py-2.5 px-4 text-sm font-medium text-[#5E6453] hover:bg-[#FFE27A]/30 shadow-sm transition-all duration-200 hover:border-[#FF9F1C]/40";
+    "inline-flex w-full justify-center items-center rounded-lg border border-[rgba(0,0,0,0.08)] bg-[#FFF7E6] py-2.5 px-4 text-sm font-medium text-[#5E6453] hover:bg-[#E6F3EC] shadow-sm transition-all duration-200 hover:border-[#4E8D6A]/40";
 
   return (
     <div className="min-h-screen w-full bg-[#FFF7E6] overflow-hidden">
 
       {/* ================================================================
-          MOBILE & TABLET LAYOUT  (hidden on lg+)
-          Simple vertical stack — no absolute overlap possible:
-            [colored header with tagline + toggle button]
-            [form card]
-          The header bg slides up/down via height transition.
+          MOBILE & TABLET  (hidden on lg+)
+          Vertical circle animation — mirrors the desktop horizontal slide
+          but adapted for portrait screens.
+          Circle slides from top-off-screen DOWN into view on Sign In,
+          and slides back UP off-screen on Sign Up.
       ================================================================ */}
-      <div className="flex flex-col min-h-screen lg:hidden">
+      {/* MOBILE & TABLET — no circle, text below card */}
+<div className="min-h-screen flex flex-col justify-center px-5 py-10 lg:hidden">
 
-        {/* Colored top banner */}
-        <div className="relative bg-[#FF9F1C] flex flex-col items-center justify-end pb-8 pt-12 px-6 text-center overflow-hidden"
-          style={{ minHeight: "220px" }}
-        >
-          {/* Decorative circles for depth */}
-          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-[#FFE27A]/30 pointer-events-none" />
-          <div className="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-[#e8890a]/30 pointer-events-none" />
-
-          <div
-            className={`transition-all duration-500 ease-in-out relative z-10 ${
-              isSignUpMode ? "opacity-0 -translate-y-4 absolute" : "opacity-100 translate-y-0"
-            }`}
-          >
-            <h2 className="font-heading text-[#2F3326] text-2xl font-semibold">New to Anchor?</h2>
-            <p className="text-[#2F3326]/70 text-sm mt-1 mb-4 max-w-xs">
-              Create a space to reflect, heal, and reconnect with yourself.
-            </p>
-            <button
-              onClick={toggleSignUpMode}
-              className="px-6 py-2 rounded-full bg-[#FFE27A] text-[#2F3326] text-sm font-semibold
-                border-2 border-[#2F3326]/20 hover:bg-[#FFDD3C] transition-all duration-300 hover:shadow-md"
-            >
-              Sign up
-            </button>
-          </div>
-
-          <div
-            className={`transition-all duration-500 ease-in-out relative z-10 ${
-              isSignUpMode ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 absolute"
-            }`}
-          >
-            <h2 className="font-heading text-[#2F3326] text-2xl font-semibold">One of us?</h2>
-            <p className="text-[#2F3326]/70 text-sm mt-1 mb-4 max-w-xs">
-              Sign in to continue your journey with Anchor
-            </p>
-            <button
-              onClick={toggleSignUpMode}
-              className="px-6 py-2 rounded-full bg-[#FFE27A] text-[#2F3326] text-sm font-semibold
-                border-2 border-[#2F3326]/20 hover:bg-[#FFDD3C] transition-all duration-300 hover:shadow-md"
-            >
-              Sign in
-            </button>
-          </div>
-        </div>
-
-        {/* Form card — sits below header, never overlaps */}
-        <div className="flex-1 flex items-start justify-center px-4 py-8 bg-[#FFF7E6]">
-          <div className="w-full max-w-[420px]">
-            <div className="relative">
-              {/* Sign In */}
-              <div
-                className={`transition-all duration-300 ease-in-out ${
-                  isSignUpMode ? "opacity-0 pointer-events-none absolute inset-0" : "opacity-100"
-                }`}
-              >
-                <SignInForm buttonClasses={buttonClasses} buttonForGFT={buttonForGFT} />
-              </div>
-              {/* Sign Up */}
-              <div
-                className={`transition-all duration-300 ease-in-out ${
-                  isSignUpMode ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"
-                }`}
-              >
-                <SignUpForm buttonClasses={buttonClasses} buttonForGFT={buttonForGFT} />
-              </div>
-            </div>
-          </div>
-        </div>
+  {/* FORM */}
+  <div className="w-full max-w-[420px] mx-auto">
+    <div className="relative">
+      <div
+        className={`transition-all duration-300 ${
+          isSignUpMode ? "opacity-0 pointer-events-none absolute inset-0" : "opacity-100"
+        }`}
+      >
+        <SignInForm buttonClasses={buttonClasses} buttonForGFT={buttonForGFT} />
       </div>
 
+      <div
+        className={`transition-all duration-300 ${
+          isSignUpMode ? "opacity-100" : "opacity-0 pointer-events-none absolute inset-0"
+        }`}
+      >
+        <SignUpForm buttonClasses={buttonClasses} buttonForGFT={buttonForGFT} />
+      </div>
+    </div>
+  </div>
+
+  {/* TEXT BELOW FORM */}
+  <div className="text-center mt-8 max-w-xs mx-auto">
+    {!isSignUpMode ? (
+      <>
+        <h2 className="font-heading text-xl font-semibold text-[#2F3326]">
+          New to Anchor?
+        </h2>
+        <p className="text-[#5E6453] text-sm mt-1 mb-4">
+          Create a space to reflect, heal, and reconnect with yourself.
+        </p>
+        <button
+          onClick={toggleSignUpMode}
+          className="px-7 py-2.5 rounded-full bg-[#FFE27A] text-[#2F3326] text-sm font-semibold
+          border-2 border-[#2F3326]/10 hover:bg-[#FFDD3C] transition-all duration-300"
+        >
+          Sign up
+        </button>
+      </>
+    ) : (
+      <>
+        <h2 className="font-heading text-xl font-semibold text-[#2F3326]">
+          One of us?
+        </h2>
+        <p className="text-[#5E6453] text-sm mt-1 mb-4">
+          Sign in to continue your journey with Anchor
+        </p>
+        <button
+          onClick={toggleSignUpMode}
+          className="px-7 py-2.5 rounded-full bg-[#FFE27A] text-[#2F3326] text-sm font-semibold
+          border-2 border-[#2F3326]/10 hover:bg-[#FFDD3C] transition-all duration-300"
+        >
+          Sign in
+        </button>
+      </>
+    )}
+  </div>
+
+</div>
+
       {/* ================================================================
-          DESKTOP LAYOUT  (hidden below lg)
-          Original horizontal sliding circle animation, fully intact.
+          DESKTOP  (hidden below lg)
+          Original horizontal sliding circle — orange → green only.
+          Structure completely untouched.
       ================================================================ */}
       <div
         className={`hidden lg:block relative w-full min-h-screen overflow-hidden
@@ -108,7 +101,7 @@ const SlidingLoginSignup = () => {
           before:top-[-10%] before:right-[48%]
           before:z-[6] before:rounded-[50%]
           before:-translate-y-1/2
-          before:bg-[#FF9F1C]
+          before:bg-[#4E8D6A]
           before:transition-all before:duration-[1600ms] before:ease-in-out
           ${isSignUpMode ? "before:translate-x-full before:right-[52%]" : ""}`}
       >
@@ -148,6 +141,7 @@ const SlidingLoginSignup = () => {
 
         {/* Overlay text + toggle buttons */}
         <div className="absolute h-full w-full top-0 left-0 grid lg:grid-cols-2">
+
           {/* LEFT — "New to Anchor?" */}
           <div
             className={`flex flex-col items-end justify-center text-center z-[6]
@@ -158,16 +152,16 @@ const SlidingLoginSignup = () => {
               className={`transition-transform duration-[1000ms] ease-in-out delay-[200ms]
                 ${isSignUpMode ? "-translate-x-[800px]" : "translate-x-0"}`}
             >
-              <h3 className="font-heading text-[#2F3326] text-[1.2rem] lg:text-[1.5rem]">
+              <h3 className="font-heading text-white text-[1.2rem] lg:text-[1.5rem]">
                 New to Anchor?
               </h3>
-              <p className="text-[#5E6453] text-[0.95rem] py-2">
+              <p className="text-white/80 text-[0.95rem] py-2">
                 Create a space to reflect, heal, and reconnect with yourself.
               </p>
               <button
                 onClick={toggleSignUpMode}
                 className="w-[130px] h-[41px] text-[#2F3326] text-[0.8rem] font-semibold
-                  border-2 border-[#2F3326]/25 rounded-full bg-[#FFE27A]
+                  border-2 border-[#2F3326]/15 rounded-full bg-[#FFE27A]
                   transition-all duration-300 hover:bg-[#FFDD3C] hover:shadow-md"
               >
                 Sign up
@@ -185,16 +179,16 @@ const SlidingLoginSignup = () => {
               className={`transition-transform duration-[1000ms] ease-in-out delay-[200ms]
                 ${isSignUpMode ? "translate-x-0" : "translate-x-[800px]"}`}
             >
-              <h3 className="font-heading text-[#2F3326] text-[1.75rem]">
+              <h3 className="font-heading text-white text-[1.75rem]">
                 One of us?
               </h3>
-              <p className="py-3 text-[#5E6453] text-[1.05rem] max-w-[320px]">
+              <p className="py-3 text-white/80 text-[1.05rem] max-w-[320px]">
                 Sign in to continue your journey with Anchor
               </p>
               <button
                 onClick={toggleSignUpMode}
                 className="w-[130px] h-[41px] text-[#2F3326] text-[0.8rem] font-semibold
-                  border-2 border-[#2F3326]/25 rounded-full bg-[#FFE27A]
+                  border-2 border-[#2F3326]/15 rounded-full bg-[#FFE27A]
                   transition-all duration-300 hover:bg-[#FFDD3C] hover:shadow-md"
               >
                 Sign in
@@ -203,7 +197,6 @@ const SlidingLoginSignup = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
