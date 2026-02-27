@@ -8,6 +8,7 @@ import {
   Settings,
   HelpCircle,
   LogOut,
+  HeartHandshake,
 } from "lucide-react";
 
 export type NavItemConfig = {
@@ -60,7 +61,12 @@ export const navConfig: NavItemConfig[] = [
     icon: Settings,
     section: "main",
   },
-
+    {
+    label: "Therapist Support",
+    href: "/therapist",
+    icon: HeartHandshake,
+    section: "main",
+    },
   // utility
   {
     label: "Help",
