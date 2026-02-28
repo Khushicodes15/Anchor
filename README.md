@@ -261,7 +261,7 @@ Anchor makes the following commitments:
 
 **Backend API:** https://github.com/Khushicodes15/anchor-backend
 **Live App:** https://anchor-topaz.vercel.app/
-**Built for:** AMD Slingshot 2025 — AI for Social Good
+
 
 ---
 
